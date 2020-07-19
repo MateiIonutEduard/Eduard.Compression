@@ -1,0 +1,15 @@
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.cache
+*.suo
+
+.vs/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+publish/
+
+*.psess
+*.vsp
+*.vspx
