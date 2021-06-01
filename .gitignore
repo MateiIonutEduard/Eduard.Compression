@@ -6,6 +6,7 @@
 *.suo
 
 .vs/
+.Eduard.Compression/Eduard.Compression/obj/*
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 publish/
