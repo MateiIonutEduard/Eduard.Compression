@@ -60,7 +60,7 @@ namespace Eduard.Compression
             if(min == 0 && stream.Position < stream.Length)
             {
                 byte[] block = AdaptiveHuffman.Extract(stream);
-                byte[] chunk = QuickLZ.decompress(block);
+                byte[] chunk = LempelZiv.Extract(block);
                 Buffer.BlockCopy(chunk, 0, data, index, chunk.Length);
                 index = chunk.Length;
             }
@@ -151,7 +151,7 @@ namespace Eduard.Compression
             byte[] buffer = new byte[index];
             Buffer.BlockCopy(data, 0, buffer, 0, index);
 
-            byte[] chunk = QuickLZ.compress(buffer, 3);
+            byte[] chunk = LempelZiv.Compress(buffer);
             byte[] block = AdaptiveHuffman.Compress(chunk);
             stream.Write(block, 0, block.Length);
             index = 0;

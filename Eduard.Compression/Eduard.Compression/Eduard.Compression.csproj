@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Eduard.Compression</RootNamespace>
     <AssemblyName>Eduard.Compression</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -51,10 +51,10 @@
     <Compile Include="DevilFile.cs" />
     <Compile Include="DevilFolder.cs" />
     <Compile Include="DevilStream.cs" />
+    <Compile Include="LempelZiv.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AdaptiveHuffman.cs" />
     <Compile Include="BinaryStream.cs" />
-    <Compile Include="QuickLZ.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
