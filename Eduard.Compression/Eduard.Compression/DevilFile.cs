@@ -37,7 +37,7 @@ namespace Eduard.Compression
     /// <summary>
     /// Represents the file entry into the archive.
     /// </summary>
-    class DevilFile : DevilEntry
+    public class DevilFile : DevilEntry
     {
         public uint Length { get; set; }
         public MemoryStream stream { get; set; }
