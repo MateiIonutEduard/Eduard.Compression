@@ -13,28 +13,27 @@ Open Visual Studio or MonoDevelop go to <b>Build</b> menu:<br>
 # Creates archives and read data from it:
 ```csharp
 static void Main(string[] args) {
-  if(args.Length != 4)
+  if(args.Length != 3)
     Environment.Exit(-1);
   
-  if(args[1] == "-c") {
+  if(args[0] == "-c") {
      Queue<string> queue = new Queue<string>();
-     string parent = Path.GetDirectoryName(args[2]);
-     queue.Enqueue(args[2]);
+     string parent = Path.GetDirectoryName(args[1]);
+     queue.Enqueue(args[1]);
      
      string root = Path.GetFileName(args[2]);
-     DevilArchive arc = new DevilArchive(Path.Combine(parent, "//", args[3]), FileAccess.Write);
+     DevilArchive arc = new DevilArchive(Path.Combine(parent, args[2]), Eduard.Compression.FileAccess.Write);
      
      while(queue.Count > 0) {
-       string file = queue.Dequeue();
-       string path = file.Replace(parent, root + "//");
-       
-       string ext = Path.GetExtension(file);
+       string filePath = queue.Dequeue();
+       string path = filePath.Replace(parent, root + "//");
+       string ext = Path.GetExtension(filePath);
        
        if(string.IsNullOrEmpty(ext)) {
           DevilFolder folder = new DevilFolder(path);
           arc.Entries.Add(folder);
        } else {
-          FileStream fs = new FileStream(file, FileMode.Open);
+          FileStream fs = new FileStream(filePath, FileMode.Open);
           MemoryStream ms = new MemoryStream();
           
           DevilStream ds = new DevilStream(ms, DevilAccess.Compress);
@@ -55,18 +54,18 @@ static void Main(string[] args) {
        }
        // so it is director, we will go through it.
        if(string.IsNullOrEmpty(ext)) {
-           foreach (string str in Directory.GetFiles(file))
+           foreach (string str in Directory.GetFiles(filePath))
              queue.Enqueue(str);
              
-           foreach (string str in Directory.GetDirectories(file))
+           foreach (string str in Directory.GetDirectories(filePath))
              queue.Enqueue(str);
        }
      }
      // close the archive now.
      arc.Close();
   } else {
-     string parent = Path.GetDirectoryName(args[2]);
-     DevilArchive arc = new DevilArchive(args[2], FileAccess.Read);
+     string parent = Path.GetDirectoryName(args[1]);
+     DevilArchive arc = new DevilArchive(args[1], Eduard.Compression.FileAccess.Read);
      
      foreach (DevilEntry entry in arc.Entries) {
         if(entry is DevilFolder) {
@@ -83,8 +82,6 @@ static void Main(string[] args) {
           
           int len = 0;
           byte[] buffer = new byte[8192];
-          uint size = file.Length;
-          uint total = 0;
           
           while((len = ds.Read(buffer, 0, buffer.Length)) != 0)
             fs.Write(buffer, 0, len);
