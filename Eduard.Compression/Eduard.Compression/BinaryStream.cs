@@ -101,11 +101,11 @@ namespace Eduard.Compression
             len = 0;
         }
 
-        public void WriteByte(byte val)
+        public void WriteByte(byte val, int size = 8)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < size; i++)
             {
-                int bit = (val >> (8 - i - 1)) & 1;
+                int bit = (val >> (size - i - 1)) & 1;
                 WriteBit(bit);
             }
         }
