@@ -32,6 +32,8 @@
 
 using System;
 using System.IO;
+#pragma warning disable
+
 namespace Eduard.Compression
 {
     public class BinaryStream
@@ -59,12 +61,19 @@ namespace Eduard.Compression
             return (bits >> len) & 1;
         }
 
-        public int ReadByte()
+        public int ReadByte(int size = 8)
         {
             int result = 0;
             int mask = 0x80;
+            int k = 0;
 
-            while(mask != 0)
+            while (k < 8 - size)
+            {
+                mask >>= 1;
+                k++;
+            }
+
+            while (mask != 0)
             {
                 int bit = ReadBit();
                 if (bit == -1) return -1;
